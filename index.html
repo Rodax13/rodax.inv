@@ -129,34 +129,25 @@
 <body>
   <header>
     <h1>🥋 Martial Arts Inventory Tracker</h1>
-  </header>
-  <div class="menu">
-    <i class="fas fa-bars" onclick="toggleMenu(true)"></i>
-    <i class="fas fa-cog"></i>
-  </div>
+ <div class="menu">
+  <i class="fas fa-bars" onclick="toggleMenu(true)"></i>
+</div>
 
-  <div id="overlayMenu" class="overlay-menu">
-    <span class="overlay-close" onclick="toggleMenu(false)">&times;</span>
-    <h2>Main Categories</h2>
-    <button onclick="filterAndClose('Gear > Uniform')"><i class="fas fa-tshirt"></i>Uniforms</button>
-    <button onclick="filterAndClose('Gear > Belt')"><i class="fas fa-grip-lines"></i>Belts</button>
-    <button onclick="filterAndClose('Gear > Sparring Gear > Helmet')"><i class="fas fa-hard-hat"></i>Helmets</button>
-    <button onclick="filterAndClose('Gear > Sparring Gear > Chest Protector')"><i class="fas fa-shield-alt"></i>Chest Protectors</button>
-    <button onclick="filterAndClose('Gear > Sparring Gear > Gloves')"><i class="fas fa-hand-rock"></i>Gloves</button>
-    <button onclick="filterAndClose('Gear > Sparring Gear > Shin Guards')"><i class="fas fa-socks"></i>Shin Guards</button>
-    <button onclick="filterAndClose('Gear > Sparring Gear > Shoes')"><i class="fas fa-shoe-prints"></i>Shoes</button>
-    <button onclick="filterAndClose('Weapon')"><i class="fas fa-crosshairs"></i>Weapons</button>
-    <button onclick="filterAndClose('Other')"><i class="fas fa-box-open"></i>Other</button>
-  </div>
+<div id="overlayMenu" class="overlay-menu">
+  <span class="overlay-close" onclick="toggleMenu(false)">&times;</span>
+  <h2>Main Categories</h2>
+  <a href="index.html"><button>🏠 All Inventory</button></a>
+  <a href="belts.html"><button>🥋 Belts</button></a>
+  <a href="uniforms.html"><button>👘 Uniforms</button></a>
+  <a href="sparring.html"><button>🥊 Sparring Gear</button></a>
+  <a href="weapons.html"><button>🗡️ Weapons</button></a>
+</div>
 
-  <!-- The rest of the content remains unchanged -->
+<script>
+  function toggleMenu(show) {
+    document.getElementById('overlayMenu').style.display = show ? 'flex' : 'none';
+  }
+</script>
 
-  <script>
-    function toggleMenu(show) {
-      const menu = document.getElementById('overlayMenu');
-      if (show) menu.classList.add('show');
-      else menu.classList.remove('show');
-    }
-  </script>
 </body>
 </html>
