@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Martial Arts Inventory - Belts</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
+    header { background-color: #2c3e50; color: white; padding: 1em; text-align: center; }
+    .container { padding: 1em; }
+    table { width: 100%; border-collapse: collapse; margin-top: 1em; }
+    th, td { border: 1px solid #ddd; padding: 0.75em; text-align: left; }
+    th { background-color: #2c3e50; color: white; }
+    .form-section { margin-top: 1em; }
+    input, select { padding: 0.5em; margin: 0.5em 0; width: 100%; }
+    button { padding: 0.5em 1em; background-color: #27ae60; color: white; border: none; cursor: pointer; }
+    button:hover { background-color: #219150; }
+    .action-buttons button { background-color: #e74c3c; margin-left: 0.5em; }
+    .action-buttons button.edit { background-color: #f39c12; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🥋 Belt Inventory</h1>
+  </header>
+  <div class="container">
+    <h2>Gear > Belts</h2>
+
+    <table id="inventory-table">
+      <thead>
+        <tr>
+          <th>Size</th>
+          <th>Color</th>
+          <th>Quantity</th>
+          <th>Notes</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <div class="form-section">
+      <h3>Add Belt</h3>
+      <select id="item-size">
+        <option value="">-- Select Size --</option>
+        <option value="000">000</option>
+        <option value="00">00</option>
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+      </select>
+      <select id="belt-color">
+        <option value="">-- Select Color --</option>
+        <option value="Advance White">Advance White</option>
+        <option value="Yellow">Yellow</option>
+        <option value="Advance Yellow">Advance Yellow</option>
+        <option value="Green">Green</option>
+        <option value="Advance Green">Advance Green</option>
+        <option value="Blue">Blue</option>
+        <option value="Advance Blue">Advance Blue</option>
+        <option value="Red">Red</option>
+      </select>
+      <input type="number" id="item-quantity" placeholder="Quantity">
+      <input type="text" id="item-notes" placeholder="Notes">
+      <button onclick="addItem()">Add Belt</button>
+    </div>
+  </div>
+
+  <script>
+    const BELT_CATEGORY = "Gear > Belt";
+
+    function getInventory() {
+      return JSON.parse(localStorage.getItem('inventory')) || [];
+    }
+
+    function saveInventory(data) {
+      localStorage.setItem('inventory', JSON.stringify(data));
+    }
+
+    function renderTable(data) {
+      const tbody = document.querySelector('#inventory-table tbody');
+      tbody.innerHTML = '';
+      data.filter(item => item.category === BELT_CATEGORY && parseInt(item.quantity) > 0)
+          .forEach((item, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${item.size}</td>
+          <td>${item.color}</td>
+          <td>${item.quantity}</td>
+          <td>${item.notes}</td>
+          <td class="action-buttons">
+            <button class="edit" onclick="editItem(${index})">Edit</button>
+            <button onclick="deleteItem(${index})">Delete</button>
+          </td>`;
+        tbody.appendChild(row);
+      });
+    }
+
+    function addItem() {
+      const size = document.getElementById('item-size').value;
+      const color = document.getElementById('belt-color').value;
+      const quantity = document.getElementById('item-quantity').value;
+      const notes = document.getElementById('item-notes').value;
+      if (!size || !color || !quantity) {
+        alert('Please fill all fields.');
+        return;
+      }
+      const item = { category: BELT_CATEGORY, size, color, quantity, notes };
+      const inventory = getInventory();
+      inventory.push(item);
+      saveInventory(inventory);
+      renderTable(inventory);
+      document.getElementById('item-size').value = '';
+      document.getElementById('belt-color').value = '';
+      document.getElementById('item-quantity').value = '';
+      document.getElementById('item-notes').value = '';
+    }
+
+    function deleteItem(index) {
+      const inventory = getInventory();
+      inventory.splice(index, 1);
+      saveInventory(inventory);
+      renderTable(inventory);
+    }
+
+    function editItem(index) {
+      const inventory = getInventory();
+      const item = inventory[index];
+      document.getElementById('item-size').value = item.size;
+      document.getElementById('belt-color').value = item.color;
+      document.getElementById('item-quantity').value = item.quantity;
+      document.getElementById('item-notes').value = item.notes;
+      deleteItem(index);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderTable(getInventory());
+    });
+  </script>
+</body>
+</html>
