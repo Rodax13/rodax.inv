@@ -71,6 +71,25 @@
       <button onclick="addItem()">Add Belt</button>
     </div>
   </div>
+<div class="menu">
+  <i class="fas fa-bars" onclick="toggleMenu(true)"></i>
+</div>
+
+<div id="overlayMenu" class="overlay-menu">
+  <span class="overlay-close" onclick="toggleMenu(false)">&times;</span>
+  <h2>Main Categories</h2>
+  <a href="index.html"><button>🏠 All Inventory</button></a>
+  <a href="belts.html"><button>🥋 Belts</button></a>
+  <a href="uniforms.html"><button>👘 Uniforms</button></a>
+  <a href="sparring.html"><button>🥊 Sparring Gear</button></a>
+  <a href="weapons.html"><button>🗡️ Weapons</button></a>
+</div>
+
+<script>
+  function toggleMenu(show) {
+    document.getElementById('overlayMenu').style.display = show ? 'flex' : 'none';
+  }
+</script>
 
   <script>
     const BELT_CATEGORY = "Gear > Belt";
